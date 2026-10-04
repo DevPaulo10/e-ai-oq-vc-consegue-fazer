@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>O que eu posso fazer pelo celular? | Antigravity AI</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+              900: '#312e81',
+            }
+          },
+          animation: {
+            'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'float': 'float 3s ease-in-out infinite',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-6px)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  <!-- QRCode.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <style>
+    /* Smooth mobile scrolling */
+    html {
+      scroll-behavior: smooth;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(226, 232, 240, 0.8);
+    }
+    .dark .glass-card {
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid rgba(51, 65, 85, 0.8);
+    }
+    .gradient-text {
+      background: linear-gradient(135deg, #4f46e5 0%, #06b6d4 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .dark .gradient-text {
+      background: linear-gradient(135deg, #818cf8 0%, #38bdf8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 min-h-screen transition-colors duration-300 font-sans antialiased selection:bg-indigo-500 selection:text-white pb-16">
+
+  <!-- Header / Navigation -->
+  <header class="sticky top-0 z-50 glass-card border-b border-slate-200/80 dark:border-slate-800/80 px-4 py-3">
+    <div class="max-w-4xl mx-auto flex items-center justify-between">
+      <div class="flex items-center space-x-2.5">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-cyan-400 flex items-center justify-center shadow-md shadow-indigo-500/20 text-white font-black text-lg">
+          ⚡
+        </div>
+        <div>
+          <span class="font-bold text-base tracking-tight block leading-tight">Antigravity</span>
+          <span class="text-[11px] text-emerald-600 dark:text-emerald-400 font-semibold flex items-center gap-1">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+            Online no seu celular
+          </span>
+        </div>
+      </div>
+      <div class="flex items-center space-x-2">
+        <!-- Dark Mode Toggle -->
+        <button id="themeToggle" class="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 transition-colors" title="Alternar tema">
+          <i id="themeIcon" data-lucide="moon" class="w-5 h-5"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <main class="max-w-4xl mx-auto px-4 pt-6 space-y-6">
+    
+    <!-- Hero Banner -->
+    <div class="p-6 md:p-8 rounded-3xl bg-gradient-to-br from-indigo-900 via-indigo-950 to-slate-950 text-white shadow-2xl relative overflow-hidden">
+      <!-- Glow circles -->
+      <div class="absolute -right-10 -bottom-10 w-48 h-48 bg-cyan-500/20 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute -left-10 -top-10 w-48 h-48 bg-indigo-500/30 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div class="relative z-10 space-y-4">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/20 border border-indigo-400/30 text-xs font-medium text-indigo-300">
+          <i data-lucide="smartphone" class="w-3.5 h-3.5"></i>
+          100% de controle pela palma da sua mão
+        </div>
+
+        <h1 class="text-2xl sm:text-4xl font-extrabold tracking-tight leading-tight">
+          O que eu consigo fazer <span class="bg-gradient-to-r from-cyan-400 to-indigo-300 bg-clip-text text-transparent">pelo seu celular?</span>
+        </h1>
+
+        <p class="text-slate-300 text-sm sm:text-base leading-relaxed max-w-xl">
+          Você digita pelo chat do seu celular (iOS ou Android) e eu opero como um <strong>desenvolvedor sênior em um ambiente Linux completo na nuvem</strong>: crio sistemas, testo código, executo comandos e publico tudo na hora.
+        </p>
+
+        <div class="pt-2 flex flex-wrap gap-2.5">
+          <button onclick="triggerConfetti()" class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white text-xs sm:text-sm font-semibold shadow-lg shadow-indigo-500/25 active:scale-95 transition-all flex items-center gap-2">
+            <i data-lucide="sparkles" class="w-4 h-4"></i>
+            Testar Interação
+          </button>
+          <a href="#playground" class="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/15 text-white text-xs sm:text-sm font-semibold active:scale-95 transition-all flex items-center gap-2">
+            <i data-lucide="play-circle" class="w-4 h-4"></i>
+            Ver Ferramentas
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Core Capabilities Grid -->
+    <section class="space-y-3">
+      <h2 class="text-lg font-bold flex items-center gap-2">
+        <i data-lucide="cpu" class="w-5 h-5 text-indigo-500"></i>
+        Superpoderes disponíveis agora
+      </h2>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+        <!-- Card 1 -->
+        <div class="glass-card p-4 rounded-2xl space-y-2 hover:shadow-md transition-shadow">
+          <div class="w-9 h-9 rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center font-bold">
+            <i data-lucide="globe" class="w-5 h-5"></i>
+          </div>
+          <h3 class="font-bold text-sm">Criar Sites & Aplicativos Web</h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+            Landing pages, painéis administrativos, jogos em HTML5, dashboards com gráficos e sites responsivos criados na hora.
+          </p>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="glass-card p-4 rounded-2xl space-y-2 hover:shadow-md transition-shadow">
+          <div class="w-9 h-9 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-bold">
+            <i data-lucide="terminal" class="w-5 h-5"></i>
+          </div>
+          <h3 class="font-bold text-sm">Terminal Linux Real</h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+            Instalo pacotes <code class="bg-slate-200 dark:bg-slate-800 px-1 py-0.5 rounded text-[11px]">npm</code>, <code class="bg-slate-200 dark:bg-slate-800 px-1 py-0.5 rounded text-[11px]">pip</code>, compilo código, rodo servidores e scripts sem você precisar de computador.
+          </p>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="glass-card p-4 rounded-2xl space-y-2 hover:shadow-md transition-shadow">
+          <div class="w-9 h-9 rounded-xl bg-violet-500/10 text-violet-600 dark:text-violet-400 flex items-center justify-center font-bold">
+            <i data-lucide="git-branch" class="w-5 h-5"></i>
+          </div>
+          <h3 class="font-bold text-sm">Git & GitHub Automático</h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+            Cada pedido seu é salvo, commitado e enviado automaticamente para o seu repositório no GitHub sem digitar nenhum comando git.
+          </p>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="glass-card p-4 rounded-2xl space-y-2 hover:shadow-md transition-shadow">
+          <div class="w-9 h-9 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center font-bold">
+            <i data-lucide="eye" class="w-5 h-5"></i>
+          </div>
+          <h3 class="font-bold text-sm">Visualização Imediata (Live Preview)</h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+            Assim que eu termino a tarefa, você já abre o link de pré-visualização e vê o resultado funcionando direto no Safari ou Chrome do celular.
+          </p>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="glass-card p-4 rounded-2xl space-y-2 hover:shadow-md transition-shadow">
+          <div class="w-9 h-9 rounded-xl bg-rose-500/10 text-rose-600 dark:text-rose-400 flex items-center justify-center font-bold">
+            <i data-lucide="bug" class="w-5 h-5"></i>
+          </div>
+          <h3 class="font-bold text-sm">Debug & Correção de Bugs</h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+            Cole um print, log de erro ou descreva o bug. Eu analiso o código, descubro a causa raiz e aplico a correção na hora.
+          </p>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="glass-card p-4 rounded-2xl space-y-2 hover:shadow-md transition-shadow">
+          <div class="w-9 h-9 rounded-xl bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 flex items-center justify-center font-bold">
+            <i data-lucide="bot" class="w-5 h-5"></i>
+          </div>
+          <h3 class="font-bold text-sm">Automações & Scripts Inteligentes</h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+            Scraping de dados, conversão de planilhas, geração de relatórios, bots do Telegram/Discord e rotinas periódicas.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Tools / Playground -->
+    <section id="playground" class="space-y-4 pt-2">
+      <div class="flex items-center justify-between">
+        <h2 class="text-lg font-bold flex items-center gap-2">
+          <i data-lucide="wrench" class="w-5 h-5 text-indigo-500"></i>
+          Playground: Teste no celular agora
+        </h2>
+        <span class="text-xs text-indigo-500 dark:text-indigo-400 font-semibold bg-indigo-50 dark:bg-indigo-950/60 px-2 py-0.5 rounded-full border border-indigo-200 dark:border-indigo-800">
+          Interativo
+        </span>
+      </div>
+
+      <div class="glass-card p-4 sm:p-6 rounded-2xl space-y-4">
+        <!-- Tab selector -->
+        <div class="flex rounded-xl bg-slate-100 dark:bg-slate-800/80 p-1 text-xs font-semibold">
+          <button id="tabQr" onclick="switchTab('qr')" class="flex-1 py-2 rounded-lg bg-white dark:bg-slate-700 shadow-sm text-indigo-600 dark:text-indigo-300 transition-all flex items-center justify-center gap-1.5">
+            <i data-lucide="qr-code" class="w-3.5 h-3.5"></i>
+            Gerador de QR Code
+          </button>
+          <button id="tabIdea" onclick="switchTab('idea')" class="flex-1 py-2 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-all flex items-center justify-center gap-1.5">
+            <i data-lucide="lightbulb" class="w-3.5 h-3.5"></i>
+            Ideias para Pedir
+          </button>
+          <button id="tabTech" onclick="switchTab('tech')" class="flex-1 py-2 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-all flex items-center justify-center gap-1.5">
+            <i data-lucide="server" class="w-3.5 h-3.5"></i>
+            Status da Máquina
+          </button>
+        </div>
+
+        <!-- Content 1: QR Code Generator -->
+        <div id="contentQr" class="space-y-3">
+          <p class="text-xs text-slate-500 dark:text-slate-400">
+            Gere um QR Code rápido direto na tela do seu celular para compartilhar qualquer link ou texto:
+          </p>
+          <div class="flex gap-2">
+            <input id="qrInput" type="text" placeholder="Digite uma URL ou mensagem..." value="https://antigravity.luch.dev" class="flex-1 text-xs sm:text-sm px-3 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+            <button onclick="generateQRCode()" class="px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs sm:text-sm font-semibold transition-all">
+              Gerar
+            </button>
+          </div>
+          <div class="flex flex-col items-center justify-center p-4 bg-slate-50 dark:bg-slate-900/60 rounded-xl border border-slate-200 dark:border-slate-800">
+            <div id="qrcode" class="p-2 bg-white rounded-lg shadow-sm"></div>
+            <span class="text-[11px] text-slate-400 mt-2">Aponte a câmera de outro celular para ler</span>
+          </div>
+        </div>
+
+        <!-- Content 2: Idea Generator -->
+        <div id="contentIdea" class="space-y-3 hidden">
+          <p class="text-xs text-slate-500 dark:text-slate-400">
+            Toque para sortear uma ideia do que você pode me pedir para construir pelo chat agora mesmo:
+          </p>
+          <div class="p-4 rounded-xl bg-indigo-50/70 dark:bg-indigo-950/40 border border-indigo-100 dark:border-indigo-900/50">
+            <p id="ideaDisplay" class="font-medium text-sm text-indigo-950 dark:text-indigo-200">
+              "Crie uma calculadora de conversão de moedas (Dólar, Euro, Real) com gráfico de histórico."
+            </p>
+          </div>
+          <button onclick="pickRandomIdea()" class="w-full py-2.5 rounded-xl bg-slate-800 dark:bg-slate-700 hover:bg-slate-900 text-white text-xs sm:text-sm font-semibold transition-all flex items-center justify-center gap-2">
+            <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
+            Sortear Outra Ideia
+          </button>
+        </div>
+
+        <!-- Content 3: Machine Status -->
+        <div id="contentTech" class="space-y-3 hidden">
+          <p class="text-xs text-slate-500 dark:text-slate-400">
+            Especificações do ambiente de desenvolvimento que está processando seus pedidos:
+          </p>
+          <div class="grid grid-cols-2 gap-2 text-xs">
+            <div class="p-3 rounded-xl bg-slate-100 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800">
+              <span class="text-slate-400 block text-[10px]">Sistema Operacional</span>
+              <strong class="text-slate-800 dark:text-slate-200">Linux Ubuntu 64-bit</strong>
+            </div>
+            <div class="p-3 rounded-xl bg-slate-100 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800">
+              <span class="text-slate-400 block text-[10px]">IA Conectada</span>
+              <strong class="text-indigo-600 dark:text-indigo-400">Gemini 3.8 Flash</strong>
+            </div>
+            <div class="p-3 rounded-xl bg-slate-100 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800">
+              <span class="text-slate-400 block text-[10px]">Git Repositório</span>
+              <strong class="text-slate-800 dark:text-slate-200 truncate block">DevPaulo10/e-ai-oq...</strong>
+            </div>
+            <div class="p-3 rounded-xl bg-slate-100 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800">
+              <span class="text-slate-400 block text-[10px]">Auto Commit & Push</span>
+              <span class="text-emerald-500 font-bold flex items-center gap-1">
+                <i data-lucide="check-circle" class="w-3.5 h-3.5"></i> Ativo
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Example Commands / What to Say -->
+    <section class="space-y-3">
+      <h2 class="text-lg font-bold flex items-center gap-2">
+        <i data-lucide="message-square" class="w-5 h-5 text-indigo-500"></i>
+        Exemplos de mensagens que você pode me mandar:
+      </h2>
+
+      <div class="space-y-2">
+        <div class="p-3.5 rounded-2xl glass-card border border-slate-200 dark:border-slate-800 text-xs sm:text-sm flex items-start gap-3">
+          <span class="px-2 py-1 rounded-lg bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300 font-mono text-[11px] font-bold">1</span>
+          <div>
+            <p class="font-semibold text-slate-800 dark:text-slate-200">"Crie uma página de cardápio digital para uma hamburgueria com botão de pedir no WhatsApp"</p>
+            <p class="text-[11px] text-slate-400 mt-0.5">Eu monto o layout, os produtos, cálculo de carrinho e o link dinâmico para WhatsApp.</p>
+          </div>
+        </div>
+
+        <div class="p-3.5 rounded-2xl glass-card border border-slate-200 dark:border-slate-800 text-xs sm:text-sm flex items-start gap-3">
+          <span class="px-2 py-1 rounded-lg bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300 font-mono text-[11px] font-bold">2</span>
+          <div>
+            <p class="font-semibold text-slate-800 dark:text-slate-200">"Quero uma lista de tarefas (Todo list) com filtro por categoria e modo escuro"</p>
+            <p class="text-[11px] text-slate-400 mt-0.5">Crio com persistência no LocalStorage para você usar no seu próprio celular.</p>
+          </div>
+        </div>
+
+        <div class="p-3.5 rounded-2xl glass-card border border-slate-200 dark:border-slate-800 text-xs sm:text-sm flex items-start gap-3">
+          <span class="px-2 py-1 rounded-lg bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300 font-mono text-[11px] font-bold">3</span>
+          <div>
+            <p class="font-semibold text-slate-800 dark:text-slate-200">"Faça um jogo simples da cobrinha (Snake) adaptado para controle por toque no celular"</p>
+            <p class="text-[11px] text-slate-400 mt-0.5">Desenvolvo o jogo com botões touch para você jogar no navegador do smartphone.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="pt-6 border-t border-slate-200 dark:border-slate-800 text-center text-xs text-slate-400 space-y-2">
+      <p>Desenvolvido dinamicamente com <strong>Antigravity AI</strong> direto para o repositório de <strong>DevPaulo10</strong>.</p>
+      <p class="text-[11px] text-slate-500">Qualquer instrução que você mandar no chat atualiza esta aplicação em tempo real!</p>
+    </footer>
+
+  </main>
+
+  <script>
+    // Initialize Lucide icons
+    lucide.createIcons();
+
+    // Dark Mode handling
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+
+    // Default to dark mode or system
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.classList.add('dark');
+      updateThemeIcon(true);
+    } else {
+      document.documentElement.classList.add('dark'); // default stylish dark
+      updateThemeIcon(true);
+    }
+
+    themeToggle.addEventListener('click', () => {
+      const isDark = document.documentElement.classList.toggle('dark');
+      updateThemeIcon(isDark);
+    });
+
+    function updateThemeIcon(isDark) {
+      if (isDark) {
+        themeIcon.setAttribute('data-lucide', 'sun');
+      } else {
+        themeIcon.setAttribute('data-lucide', 'moon');
+      }
+      lucide.createIcons();
+    }
+
+    // Confetti effect
+    function triggerConfetti() {
+      confetti({
+        particleCount: 80,
+        spread: 60,
+        origin: { y: 0.7 }
+      });
+    }
+
+    // Tab Switcher
+    function switchTab(tab) {
+      const tabs = ['qr', 'idea', 'tech'];
+      tabs.forEach(t => {
+        const btn = document.getElementById('tab' + t.charAt(0).toUpperCase() + t.slice(1));
+        const content = document.getElementById('content' + t.charAt(0).toUpperCase() + t.slice(1));
+        if (t === tab) {
+          btn.className = 'flex-1 py-2 rounded-lg bg-white dark:bg-slate-700 shadow-sm text-indigo-600 dark:text-indigo-300 transition-all flex items-center justify-center gap-1.5';
+          content.classList.remove('hidden');
+        } else {
+          btn.className = 'flex-1 py-2 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-all flex items-center justify-center gap-1.5';
+          content.classList.add('hidden');
+        }
+      });
+      lucide.createIcons();
+    }
+
+    // QR Code Generator
+    let qrCodeInstance = null;
+    function generateQRCode() {
+      const input = document.getElementById('qrInput');
+      const container = document.getElementById('qrcode');
+      container.innerHTML = '';
+      const text = input.value.trim() || window.location.href;
+      qrCodeInstance = new QRCode(container, {
+        text: text,
+        width: 140,
+        height: 140,
+        colorDark: "#0f172a",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H
+      });
+    }
+    // Initial QR Code
+    generateQRCode();
+
+    // Ideas generator
+    const ideas = [
+      "Crie uma calculadora de conversão de moedas (Dólar, Euro, Real) com gráfico de histórico.",
+      "Crie um jogo da cobrinha (Snake) com botões touch para jogar no celular.",
+      "Faça um cardápio digital interativo para restaurante com sacola de pedidos.",
+      "Desenvolva um gerador de senhas seguras com opções de símbolos e cópia com um clique.",
+      "Crie um cronômetro e timer estilo Pomodoro para produtividade.",
+      "Monte uma página de portfólio profissional mobile-first com projetos e contato.",
+      "Crie um aplicativo de controle de despesas e orçamento com gráficos."
+    ];
+    let currentIdeaIndex = 0;
+    function pickRandomIdea() {
+      currentIdeaIndex = (currentIdeaIndex + 1) % ideas.length;
+      document.getElementById('ideaDisplay').innerText = `"${ideas[currentIdeaIndex]}"`;
+      triggerConfetti();
+    }
+  </script>
+</body>
+</html>
